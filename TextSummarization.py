@@ -11,3 +11,22 @@ def getTextWaPo(url):
 
 text=getTextWaPo(articleURL)
 print(text)
+
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords
+from string import punctuation
+
+import nltk
+nltk.download('punkt')
+sents = sent_tokenize(text)
+# print(sents)
+
+word_sent = word_tokenize(text.lower())
+# print(word_sent)
+
+nltk.download('stopwords')
+_stopword = set(stopwords.words('english') + list(punctuation))
+# print(_stopword)
+
+word_sent = [word for word in word_sent if word not in _stopword]
+print(word_sent)
