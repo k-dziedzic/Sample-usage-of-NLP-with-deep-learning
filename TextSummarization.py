@@ -30,3 +30,26 @@ _stopword = set(stopwords.words('english') + list(punctuation))
 
 word_sent = [word for word in word_sent if word not in _stopword]
 print(word_sent)
+
+from nltk.probability import FreqDist
+freq = FreqDist(word_sent)
+# print(freq)
+
+from heapq import nlargest
+nlargestWord = nlargest(10,freq, key=freq.get)
+# print(nlargestWord)
+
+from collections import defaultdict
+ranking = defaultdict(int)
+
+for i, sent in enumerate(sents):
+     for w in word_tokenize(sent.lower()):
+        if w in freq:
+            ranking[i] += freq[w]
+
+# print(ranking)
+
+sents_idx = nlargest(4, ranking, key=ranking.get)
+# print(sents_idx)
+
+print([sents[j] for j in sorted(sents_idx)])
