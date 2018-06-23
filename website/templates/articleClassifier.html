@@ -35,11 +35,28 @@
         </div>
     </nav>
 
-    <div class="container-fluid" style="text-align:center; padding-top:100px;">
-        <br/>
-        <h1>Aplikacja na Sztuczną Inteligencję</h1><br/>
-        <h4>Aplikacja została napisana na zaliczenia z przedmiotu Sztuczna Inteligencja</h4>
+    <div class="container-fluid" style="padding-top:50px">
+        <h2>Streszczanie artykułu</h2>
+        <form method="post" action="/showSummarization/">
+            <table>
+                <tr>
+                    <td>Wprowadź link do strony:</td>
+                    <td><input style="width:500px" type="url" name="address" required/></td>
+                </tr>
+                <tr>
+                    <td>Wprowadź liczbę zdań streszczenia:</td>
+                    <td><input type="number" name="numberOfSentence" required/></td>
+                </tr>
+                <tr>
+                    <td>
 
+                    </td>
+                    <td>
+                        <button>Streść artykuł</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
 </div>
 </body>
