@@ -31,4 +31,8 @@ urlpatterns = [
     url(r'^shortenArticle/', views.index),
     # main page
     url(r'^$', views.mainPage),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+    #
+    url(r'^articleClassifier/', views.classifier)
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

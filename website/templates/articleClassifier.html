@@ -26,37 +26,40 @@
                     <a class="nav-link" href="/shortenArticle">Streszczanie artykułu<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="/hashtagArticle">Kategoria artykułu</a>
+                    <a class="nav-link" href="/articleClassifier">Kategoria artykułu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Rozpoznaj SPAM</a>
+                    <a class="nav-link" href="#">Rozpoznaj SPAM</a>
                 </li>
             </ul>
         </div>
     </nav>
 
     <div class="container-fluid" style="padding-top:50px">
-        <h2>Streszczanie artykułu</h2>
+        <div class="jumbotron">
         <form method="post" action="/showSummarization/">
-            <table>
-                <tr>
-                    <td>Wprowadź link do strony:</td>
-                    <td><input style="width:500px" type="url" name="address" required/></td>
-                </tr>
-                <tr>
-                    <td>Wprowadź liczbę zdań streszczenia:</td>
-                    <td><input type="number" name="numberOfSentence" required/></td>
-                </tr>
-                <tr>
-                    <td>
-
-                    </td>
-                    <td>
-                        <button>Streść artykuł</button>
-                    </td>
-                </tr>
-            </table>
+            <div class="row">
+                <div class="col-md-10">
+                    <h2>Klasyfikacja artykułu</h2>
+                </div>
+                <div class="col-md-2" style="text-align: right;">
+                    <button type="submit" class="btn btn-info">Prześlij</button>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="form-group">
+                    <label for="articleUrl">Wprowadź link do strony:</label>
+                    <input type="url" class="form-control" id="articleUrl" aria-describedby="urlHelp" placeholder="Adres URL">
+                    <small id="urlHelp" class="form-text text-muted">Zalecamy wklejenie zawartości artykułu w polu poniżej</small>
+                </div>
+                <div class="form-group">
+                    <label for="articleContent">Wklej treść artykułu:</label>
+                    <textarea class="form-control" id="articleContent" rows="20"></textarea>
+                </div>
+            </div>
         </form>
+        </div>
     </div>
 </div>
 </body>

@@ -43,3 +43,8 @@ def index(request):
 def mainPage(request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render())
+
+
+def classifier(request):
+    template = loader.get_template('articleClassifier.html')
+    return HttpResponse(template.render())
