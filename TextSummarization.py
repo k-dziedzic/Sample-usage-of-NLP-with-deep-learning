@@ -1,3 +1,4 @@
+import re
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from nltk.tokenize import sent_tokenize, word_tokenize
@@ -8,7 +9,7 @@ from heapq import nlargest
 from collections import defaultdict
 from langdetect import detect
 
-articleURL = "http://antyweb.pl/elektronika-ograniczone-zaufanie/"
+articleURL = input("Type the address of the website, next SPACE, and then click ENTER:\n")
 
 
 def getTextWaPo(url):
@@ -25,7 +26,16 @@ def getTextWaPo(url):
         return text.encode('utf-8', errors='replace').decode().strip()
 
 
-text = getTextWaPo(articleURL)
+regex = re.compile(
+    r'^(?:http|ftp)s?://'  # http:// or https://
+    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
+    r'localhost|'  # localhost...
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+    r'(?::\d+)?'  # optional port
+    r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
+if re.match(regex, articleURL.strip()):
+    text = getTextWaPo(articleURL)
 
 
 def summarize(text, n):
@@ -58,4 +68,7 @@ def summarize(text, n):
         return "Empty \"div id=\"article\""
 
 
-print(summarize(text, 4))
+numberOfSentence = int(input("Type number of sentence in summarization, then click ENTER:\n"))
+
+if text and numberOfSentence > 0:
+    print(summarize(text, numberOfSentence))
