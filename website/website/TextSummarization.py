@@ -8,6 +8,21 @@ from heapq import nlargest
 from collections import defaultdict
 from langdetect import detect
 
+def getTitle(url):
+    req = Request(url, headers={'User-Agent': 'Chrome'})
+    soup = BeautifulSoup(urlopen(req).read().decode('utf8'), "lxml")
+    title= soup.title.text
+
+    req1 = Request(url)
+    try:
+        soup1 = BeautifulSoup(urlopen(req1).read().decode('utf8'), "lxml")
+        title1 = soup1.title.text
+    except:
+        return title
+
+    if title1>title:
+        return title1
+
 
 def getTextWaPo(url):
     req = Request(url, headers={'User-Agent': 'Opera/53.0.2907.99'})

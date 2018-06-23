@@ -19,10 +19,12 @@ def index(request):
         TextSummarization.numberOfSentence = numberOfSentence
         text = TextSummarization.getTextWaPo(address)
         summarization = TextSummarization.summarize(text, numberOfSentence)
+        title=TextSummarization.getTitle(address)
 
         # adding the values in a context variable
         context = {
             'summarization': summarization,
+            'title':title,
         }
 
         # getting our showdata template
