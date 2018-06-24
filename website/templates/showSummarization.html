@@ -36,14 +36,16 @@
     </nav>
 
     <div class="container-fluid" style="padding-top:50px;">
-        <h2 style="text-align:center">Streszczanie artykułu:</h2><br/>
-        <h3 style="text-align:center"><strong>"{{ title }}"</strong></h3>
-        <br/>
-        <form method="post" action="/showSummarization/">
+        <div class="jumbotron">
+            <h2 style="text-align:center">Streszczanie artykułu:</h2><br/>
+            <h4 style="text-align:center"><strong>"{{ title }}"</strong></h4>
+            <br/>
+            <form method="post" action="/showSummarization/">
 
-            <p align="justify">{{ summarization }}</p>
+                <p align="justify">{{ summarization }}</p>
 
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 </body>

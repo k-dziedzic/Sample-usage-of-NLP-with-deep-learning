@@ -5,6 +5,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="website.TextSummarization" />
+          <option value="website.website.TextSummarization.*" />
         </list>
       </option>
     </inspection_tool>

@@ -7,6 +7,7 @@ from nltk.probability import FreqDist
 from heapq import nlargest
 from collections import defaultdict
 from langdetect import detect
+from random import randint
 
 def getTitle(url):
     req = Request(url, headers={'User-Agent': 'Chrome'})
@@ -21,33 +22,36 @@ def getTitle(url):
         if title is not "None":
             return title
         else:
-            return "Strona wykorzystuje znaczniki nie dostosowane do wyszukiwania"
+            return "Strona wykorzystuje znaczniki nie dostosowane do wyszukiwania tytułu"
 
     if title1>=title:
         if title1 is not "None":
             return title1
         else:
-            return "Strona wykorzystuje znaczniki nie dostosowane do wyszukiwania"
+            return "Strona wykorzystuje znaczniki nie dostosowane do wyszukiwania tytułu."
 
 def textWithoutJS(soup):
-    # kill all script and style elements
     for script in soup(["script", "style"]):
-        script.decompose()  # rip it out
+        script.decompose()
 
-def getTextWaPo(url):
-    req = Request(url, headers={'User-Agent': 'Opera/53.0.2907.99'})
-    page = urlopen(req).read().decode('utf8')
-    soup = BeautifulSoup(page, "lxml")
-    textWithoutJS(soup)
-    text = ' '.join(map(lambda p: p.text, soup.find_all('article')))
+
+def getTextFromWebsite(url):
+    request = Request(url, headers={'User-Agent': 'Opera/53.0.2907.99'})
+    website = urlopen(request).read().decode('utf8','ignore')
+    beautifulSoup = BeautifulSoup(website, "lxml")
+    textWithoutJS(beautifulSoup)
+
+    text = ' '.join(map(lambda p: p.text, beautifulSoup.find_all('article')))
+
     if text:
-        return text.encode('utf-8', errors='replace').decode().replace("?", " ").replace(".",". ")
+        return text.encode('utf8', errors='replace').decode().translate(str.maketrans("\n\r\t","   ")).replace(".",". ")
     else:
-        page = urlopen(url).read().decode('utf8')
-        soup = BeautifulSoup(page, "lxml")
-        textWithoutJS(soup)
-        text = ' '.join(map(lambda p: p.text, soup.find_all('article')))
-        return text.encode('utf-8', errors='replace').decode().strip().replace("?", " ").replace(".",". ")
+        website = urlopen(url).read().decode('utf8','ignore')
+        beautifulSoup = BeautifulSoup(website, "lxml")
+        textWithoutJS(beautifulSoup)
+        text = ' '.join(map(lambda p: p.text, beautifulSoup.find_all('article')))
+        return text.encode('utf8', errors='replace').decode().strip().translate(str.maketrans("\n\r\t","   ")).replace(".",". ")
+
 
 def deleteRepeatingSentence(sents):
     for i in range (0, len(sents)):
@@ -63,27 +67,28 @@ def summarize(text, n):
         if int(n)<len(sents):
             word_sent = word_tokenize(text.lower())
 
-            if detect(sents[3]) == "en":
+            if detect(sents[randint(0, len(sents))]) == "en":
                 _stopword = set(stopwords.words('english') + list(punctuation))
             else:
                 _stopword = set(stopwords.words('polish.txt') + list(punctuation))
 
             word_sent = [word for word in word_sent if word not in _stopword]
 
-            freq = FreqDist(word_sent)
+            frequency = FreqDist(word_sent)
             ranking = defaultdict(int)
 
             for i, sent in enumerate(sents):
                 for w in word_tokenize(sent.lower()):
-                    if w in freq:
-                        ranking[i] += freq[w]
+                    if w in frequency:
+                        ranking[i] += frequency[w]
 
-            sents_idx = nlargest(int(n), ranking, key=ranking.get)
-            return [sents[j] for j in sorted(sents_idx)]
+            sents_id = nlargest(int(n), ranking, key=ranking.get)
+
+            return [sents[j] for j in sorted(sents_id)]
 
         else:
-            return "The number of sentences that you want in the summary is too high from a possible"
+            return "Określona liczba zdań streszczenia przekracza liczbę wszystkich zdań artykułu."
 
     else:
-        return "No \"div id=\"article\""
+        return "Strona wykorzystuje znaczniki nie dostosowane do wyszukiwania artykułu."
 
