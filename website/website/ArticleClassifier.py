@@ -13,10 +13,10 @@ def classify(text):
     textFile.write(text.replace('\n', ' '))
     textFile.close()
     model = pwd + '/articles.ftz'
-    label = os.popen("fasttext predict "+model+" "+filePath).read()
-    label = str(label).replace('\n', '')
-    if label in labelDict.keys():
-        return labelDict[label]
+    label = os.popen("fasttext predict-prob "+model+" "+filePath).read()
+    labels = str(label).replace('\n', '').split(" ")
+    if len(labels) > 1 and labels[0] in labelDict.keys() and float(labels[1]) > 0.5:
+        return labelDict[labels[0]]
     else:
         return labelDict["other"];
 

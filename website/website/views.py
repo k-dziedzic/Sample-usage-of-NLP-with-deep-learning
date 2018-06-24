@@ -47,12 +47,14 @@ def classifier(request):
 @csrf_exempt
 def classification_result(request):
     articleContent = request.POST.get('articleContent')
-
+    articleTitle = request.POST.get('articleTitle')
     label = ArticleClassifier.classify(articleContent)
 
     # adding the values in a context variable
     context = {
-        'label': label
+        'label': label,
+        'title': articleTitle,
+        'content': articleContent
     }
 
     template = loader.get_template('classificationResult.html')
