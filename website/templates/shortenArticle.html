@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Streszczanie artykułu</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     {% load static %}
@@ -36,27 +36,79 @@
     </nav>
 
     <div class="container-fluid" style="padding-top:50px">
-        <h2>Streszczanie artykułu</h2>
+        <div class="jumbotron">
         <form method="post" action="/showSummarization/">
-            <table>
-                <tr>
-                    <td>Wprowadź link do strony:</td>
-                    <td><input style="width:500px" type="url" name="address" required/></td>
-                </tr>
-                <tr>
-                    <td>Wprowadź liczbę zdań streszczenia:</td>
-                    <td><input type="number" name="numberOfSentence" required/></td>
-                </tr>
-                <tr>
-                    <td>
+            <div class="row">
+                <div class="col-md-10">
+                    <h2>Streszczanie artykułu</h2>
+                </div>
+                <div class="col-md-2" style="text-align: right;">
+                    <button type="submit" class="btn btn-info">Streść artykuł</button>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <div class="form-group">
+                    <label for="numberOfSentence">Wprowadź liczbę zdań streszczenia</label>
+                    <input type="number" class="form-control" id="numberOfSentence" name="numberOfSentence" placeholder="0"  min="0" required>
+                </div>
 
-                    </td>
-                    <td>
-                        <button>Streść artykuł</button>
-                    </td>
-                </tr>
-            </table>
+                <label for="numberOfSentence">Wybierz sposób wprowadzania artykułu: </label>
+
+                <select id="autoOrManual" onchange="choice(this);" required>
+                    <option value="">Wybierz opcję...</option>
+                    <option value="manual">Przy użyciu wklejania artykułu</option>
+                    <option value="auto">Przy użyciu linku do artykułu</option>
+                </select>
+                <hr>
+
+                <div id="ifAuto" style="display: none;">
+                    <div class="form-group">
+                        <label for="urlAddress">Wprowadź link do artykułu:</label>
+                        <input type="url" class="form-control" id="urlAddress" name="urlAddress" placeholder="Adres URL">
+                    </div>
+                </div>
+
+                <div id="ifManual" style="display: none;">
+                    <div class="form-group">
+                        <label for="articleTitle">Wprowadź tytuł artykułu:</label>
+                        <input type="text" class="form-control" id="articleTitle" name="articleTitle" placeholder="Tytuł artykułu">
+                    </div>
+                    <div class="form-group">
+                        <label for="articleContent">Wklej treść artykułu:</label>
+                        <textarea class="form-control" id="articleContent" name= "articleContent" rows="20" placeholder="Treść artykułu"></textarea>
+                    </div>
+                </div>
+
+                <script>
+                    function choice(that) {
+                        if (that.value == "auto") {
+                            document.getElementById("ifAuto").style.display = "block";
+                            document.getElementById("ifManual").style.display = "none";
+                            document.getElementById("articleTitle").required=false;
+                            document.getElementById("articleContent").required=false;
+                            document.getElementById("urlAddress").required=true;
+                            document.getElementById("autoOrManual").required=false;
+                        } else if(that.value == "manual") {
+                            document.getElementById("ifManual").style.display = "block";
+                            document.getElementById("ifAuto").style.display = "none";
+                            document.getElementById("urlAddress").required=false;
+                            document.getElementById("articleTitle").required=true;
+                            document.getElementById("articleContent").required=true;
+                            document.getElementById("autoOrManual").required=false;
+                        } else {
+                            document.getElementById("autoOrManual").required=true;
+                            document.getElementById("ifManual").style.display = "none";
+                            document.getElementById("ifAuto").style.display = "none";
+                            document.getElementById("urlAddress").required=false;
+                            document.getElementById("articleTitle").required=false;
+                            document.getElementById("articleContent").required=false;
+                        }
+                    }
+                </script>
+            </div>
         </form>
+        </div>
     </div>
 </div>
 </body>

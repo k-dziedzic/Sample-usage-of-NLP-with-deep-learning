@@ -8,18 +8,23 @@ from website import TextSummarization
 
 
 @csrf_exempt
-def index(request):
+def summarization(request):
     # if post request came
     if request.method == 'POST':
         # getting values from post
-        address = request.POST.get('address')
+        urlAddress = request.POST.get('urlAddress')
         numberOfSentence = request.POST.get('numberOfSentence')
+        articleContent=request.POST.get('articleContent')
+        articleTitle=request.POST.get('articleTitle')
 
-        TextSummarization.articleURL = address
-        TextSummarization.numberOfSentence = numberOfSentence
-        text = TextSummarization.getTextWaPo(address)
-        summarization = TextSummarization.summarize(text, numberOfSentence)
-        title=TextSummarization.getTitle(address)
+        if articleContent and articleTitle:
+            summarization = TextSummarization.summarize(articleContent, numberOfSentence)
+            title=articleTitle;
+
+        elif urlAddress:
+            text = TextSummarization.getTextWaPo(urlAddress)
+            summarization = TextSummarization.summarize(text, numberOfSentence)
+            title=TextSummarization.getTitle(urlAddress)
 
         # adding the values in a context variable
         context = {
@@ -40,7 +45,7 @@ def index(request):
         return HttpResponse(template.render())
 
 
-def mainPage(request):
+def index(request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render())
 

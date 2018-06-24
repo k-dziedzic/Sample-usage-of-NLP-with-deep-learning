@@ -25,12 +25,12 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # define the url getdata that we have written inside form
-    url(r'^showSummarization/', views.index),
+    url(r'^showSummarization/', views.summarization),
 
     # defining the view for root URL
-    url(r'^shortenArticle/', views.index),
+    url(r'^shortenArticle/', views.summarization),
     # main page
-    url(r'^$', views.mainPage),
+    url(r'^$', views.index),
 
     #
     url(r'^articleClassifier/', views.classifier)
