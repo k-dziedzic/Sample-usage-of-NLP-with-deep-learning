@@ -32,7 +32,7 @@ urlpatterns = [
     # main page
     url(r'^$', views.index),
 
-    #
-    url(r'^articleClassifier/', views.classifier)
+    url(r'^articleClassifier/', views.classifier),
 
+    url(r'^classificationResult/', views.classification_result)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -2,8 +2,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 
-from website import TextSummarization
-
+from website import TextSummarization, ArticleClassifier
 
 @csrf_exempt
 def summarization(request):
@@ -39,7 +38,22 @@ def index(request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render())
 
-
+@csrf_exempt
 def classifier(request):
     template = loader.get_template('articleClassifier.html')
     return HttpResponse(template.render())
+
+
+@csrf_exempt
+def classification_result(request):
+    articleContent = request.POST.get('articleContent')
+
+    label = ArticleClassifier.classify(articleContent)
+
+    # adding the values in a context variable
+    context = {
+        'label': label
+    }
+
+    template = loader.get_template('classificationResult.html')
+    return HttpResponse(template.render(context, request))

@@ -37,26 +37,18 @@
 
     <div class="container-fluid" style="padding-top:50px">
         <div class="jumbotron">
-        <form method="post" action="/classificationResult/">
+        <form method="post" action="/articleClassifier/">
             <div class="row">
                 <div class="col-md-10">
                     <h2>Klasyfikacja artykułu</h2>
                 </div>
                 <div class="col-md-2" style="text-align: right;">
-                    <button type="submit" class="btn btn-info">Prześlij</button>
+                    <button type="submit" class="btn btn-info">Powrót</button>
                 </div>
             </div>
             <hr>
             <div>
-                <div class="form-group">
-                    <label for="articleUrl">Wprowadź link do strony:</label>
-                    <input type="url" class="form-control" id="articleUrl" name="articleUrl" aria-describedby="urlHelp" placeholder="Adres URL">
-                    <small id="urlHelp" class="form-text text-muted">Zalecamy wklejenie zawartości artykułu w polu poniżej</small>
-                </div>
-                <div class="form-group">
-                    <label for="articleContent">Wklej treść artykułu:</label>
-                    <textarea class="form-control" id="articleContent" name="articleContent"rows="20"></textarea>
-                </div>
+                {{ label }}
             </div>
         </form>
         </div>
