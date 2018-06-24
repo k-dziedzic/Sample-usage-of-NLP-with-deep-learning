@@ -2,7 +2,8 @@ import os
 
 labelDict = {"__label__political": "Polityczny",
              "__label__sport": "Sportowy",
-             "__label__technology": "Techniczny"}
+             "__label__technology": "Techniczny",
+             "other": "Inny"}
 
 
 def classify(text):
@@ -14,5 +15,8 @@ def classify(text):
     model = pwd + '/articles.ftz'
     label = os.popen("fasttext predict "+model+" "+filePath).read()
     label = str(label).replace('\n', '')
-    return labelDict[label]
+    if label in labelDict.keys():
+        return labelDict[label]
+    else:
+        return labelDict["other"];
 

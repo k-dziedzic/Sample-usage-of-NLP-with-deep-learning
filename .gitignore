@@ -171,6 +171,7 @@ venv.bak/
 .mypy_cache/
 
 # myfile
+website/website/text.txt
 
 # Created by https://www.gitignore.io/api/django
 
