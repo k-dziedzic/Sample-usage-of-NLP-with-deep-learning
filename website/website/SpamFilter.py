@@ -1,6 +1,8 @@
 import os
 import pyensae
-from nltk import word_tokenize
+import nltk.classify.util
+from nltk.classify import NaiveBayesClassifier
+from nltk.tokenize import word_tokenize
 
 pathToDatasets = "E:\PyCharmWorkspace\SampleUsageOfNLPWithDeepLearning\website\dataSources\enron"
 
@@ -44,5 +46,27 @@ for folders, subfolders, files in os.walk(pathToDatasets):
             except:
                 print(file)
 
-print(ham_tab[1])
-print(spam_tab[1])
+# print(ham_tab[1])
+# print(spam_tab[1])
+
+# split data into 70% train data and 30% test data
+combined_tab=ham_tab+spam_tab
+
+training_part=int(len(combined_tab)*.7)
+training_set=combined_tab[:training_part]
+
+test_set=combined_tab[training_part:]
+
+# print(len(combined_tab))
+# print(len(training_set))
+# print(len(test_set))
+
+# Create NB classifier
+classifier=NaiveBayesClassifier.train(training_set)
+
+#check accuracy
+accuracy=nltk.classify.util.accuracy(classifier,test_set)
+
+print("Accuracy: "+str(accuracy*100)+"%")
+
+print(classifier.show_most_informative_features(20))
