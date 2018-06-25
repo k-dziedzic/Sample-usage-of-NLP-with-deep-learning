@@ -15,20 +15,16 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import url
-from django.contrib import admin
 from django.conf.urls.static import static
 
-# importing views
-# we need to create views.py
 from . import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),
     url(r'^shortenArticle/', views.shorten_article),
     url(r'^showSummarization/', views.summarization),
     url(r'^articleClassifier/', views.classifier),
     url(r'^classificationResult/', views.classification_result),
-    url(r'^spamClassifier/', views.spamClassifier),
-    url(r'^classificationSpam/', views.classificationSpam),
+    url(r'^spamClassifier/', views.spam_classifier),
+    url(r'^classificationSpam/', views.classification_spam),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
