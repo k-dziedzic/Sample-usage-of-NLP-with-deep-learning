@@ -13,7 +13,7 @@ def summarization(request):
     article_content = request.POST.get('articleContent')
     article_title = request.POST.get('articleTitle')
 
-    if article_content and article_title:
+    if article_content:
         summarization = TextSummarization.summarize(article_content, number_of_sentence)
         title = article_title
 
@@ -23,7 +23,7 @@ def summarization(request):
         title = TextSummarization.get_title(urlAddress)
 
     context = {
-        'summarization': summarization,
+        'summarization': '%s' % ' '.join(map(str, summarization)),
         'title': title,
     }
 

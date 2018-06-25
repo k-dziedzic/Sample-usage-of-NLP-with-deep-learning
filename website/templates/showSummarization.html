@@ -34,19 +34,30 @@
             </ul>
         </div>
     </nav>
-
-    <div class="container-fluid" style="padding-top:50px;">
+    <div class="container-fluid" style="padding-top:50px">
         <div class="jumbotron">
-            <h2 style="text-align:center">Streszczanie artykułu:</h2><br/>
-            <h4 style="text-align:center"><strong>"{{ title }}"</strong></h4>
-            <br/>
-            <form method="post" action="/showSummarization/">
-
-                <p align="justify">{{ summarization }}</p>
-
-            </form>
+        <form method="post" action="/shortenArticle/">
+            <div class="row">
+                <div class="col-md-10">
+                    <h2>Streszczanie artykułu</h2>
+                </div>
+                <div class="col-md-2" style="text-align: right;">
+                    <button type="submit" class="btn btn-info">Powrót</button>
+                </div>
+            </div>
+            <hr>
+            <div style="overflow: hidden; text-align:center; padding-bottom:25px;">
+                {% if title %}
+                    <h3>Tytuł: {{ title }}</h3>
+                {% endif %}
+            </div>
+            <div style="border: 2px solid #dedede;  border-radius: 5px; padding: 10px;">
+                {{ summarization }}
+            </div>
+        </form>
         </div>
     </div>
+
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
