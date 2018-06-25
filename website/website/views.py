@@ -18,9 +18,9 @@ def summarization(request):
         title = article_title
 
     elif url_address:
-        text = TextSummarization.get_text_from_website(urlAddress)
-        summarization = TextSummarization.summarize(text, numberOfSentence)
-        title = TextSummarization.get_title(urlAddress)
+        text = TextSummarization.get_text_from_website(url_address)
+        summarization = TextSummarization.summarize(text, number_of_sentence)
+        title = TextSummarization.get_title(url_address)
 
     context = {
         'summarization': '%s' % ' '.join(map(str, summarization)),
