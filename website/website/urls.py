@@ -24,18 +24,11 @@ from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # define the url getdata that we have written inside form
-    url(r'^showSummarization/', views.summarization),
-
-    # defining the view for root URL
-    url(r'^shortenArticle/', views.summarization),
-    # main page
     url(r'^$', views.index),
-
+    url(r'^shortenArticle/', views.shorten_article),
+    url(r'^showSummarization/', views.summarization),
     url(r'^articleClassifier/', views.classifier),
-
     url(r'^classificationResult/', views.classification_result),
-
     url(r'^spamClassifier/', views.spamClassifier),
     url(r'^classificationSpam/', views.classificationSpam),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
