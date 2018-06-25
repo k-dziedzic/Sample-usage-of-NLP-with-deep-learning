@@ -34,5 +34,8 @@ urlpatterns = [
 
     url(r'^articleClassifier/', views.classifier),
 
-    url(r'^classificationResult/', views.classification_result)
+    url(r'^classificationResult/', views.classification_result),
+
+    url(r'^spamClassifier/', views.spamClassifier),
+    url(r'^classificationSpam/', views.classificationSpam),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

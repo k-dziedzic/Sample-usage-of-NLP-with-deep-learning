@@ -3,6 +3,8 @@ from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 
 from website import TextSummarization, ArticleClassifier
+from website import SpamFilter
+
 
 @csrf_exempt
 def summarization(request):
@@ -58,4 +60,25 @@ def classification_result(request):
     }
 
     template = loader.get_template('classificationResult.html')
+    return HttpResponse(template.render(context, request))
+
+@csrf_exempt
+def spamClassifier(request):
+    template = loader.get_template('spamClassifier.html')
+    return HttpResponse(template.render())
+
+
+@csrf_exempt
+def classificationSpam(request):
+    mailContent = request.POST.get('mailContent')
+
+    isSpam=SpamFilter.spamFilter(mailContent)
+
+    # adding the values in a context variable
+    context = {
+        'isSpam': isSpam,
+        'mailContent': mailContent,
+    }
+
+    template = loader.get_template('classificationSpam.html')
     return HttpResponse(template.render(context, request))

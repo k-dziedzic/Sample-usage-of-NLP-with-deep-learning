@@ -6,6 +6,9 @@
         <list>
           <option value="website.TextSummarization" />
           <option value="website.website.TextSummarization.*" />
+          <option value="website.website.views.*" />
+          <option value="website.ArticleClassifier" />
+          <option value="website.SpamFilter" />
         </list>
       </option>
     </inspection_tool>

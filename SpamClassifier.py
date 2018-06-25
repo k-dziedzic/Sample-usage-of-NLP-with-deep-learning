@@ -1,10 +1,8 @@
 import os
-
 import pyensae
-
 from nltk.classify import NaiveBayesClassifier
 from nltk.tokenize import word_tokenize
-
+import nltk.classify.util
 import pickle
 
 # download Enron-Spam datasets
@@ -53,16 +51,18 @@ for folders, subfolders, files in os.walk(pathToDatasets):
             except:
                 print(file)
 
-# split data into 70% train data and 30% test data
+# split data into 80% train data and 20% test data
 combined_tab = ham_tab + spam_tab
 
-training_part = int(len(combined_tab) * .7)
+training_part = int(len(combined_tab) * .8)
 training_set = combined_tab[:training_part]
 
 test_set = combined_tab[training_part:]
 
 # Create NB classifier
 classifier = NaiveBayesClassifier.train(training_set)
+
+# print(nltk.classify.util.accuracy(classifier, test_set))
 
 # save to file
 with open('website/website/NB_classifier.pkl', 'wb') as file:
