@@ -1,5 +1,6 @@
 import os
 import pyensae
+from nltk import word_tokenize
 
 pathToDatasets = "E:\PyCharmWorkspace\SampleUsageOfNLPWithDeepLearning\website\dataSources\enron"
 
@@ -11,43 +12,37 @@ pyensae.download_data("enron4.tar.gz", url="http://www.aueb.gr/users/ion/data/en
 pyensae.download_data("enron5.tar.gz", url="http://www.aueb.gr/users/ion/data/enron-spam/preprocessed/", whereTo="E:\PyCharmWorkspace\SampleUsageOfNLPWithDeepLearning\website\dataSources\enron")
 pyensae.download_data("enron6.tar.gz", url="http://www.aueb.gr/users/ion/data/enron-spam/preprocessed/", whereTo="E:\PyCharmWorkspace\SampleUsageOfNLPWithDeepLearning\website\dataSources\enron")
 
-# print folders, subfolders and number of files in subfolder
-# for folders, subfolders, files in os.walk(pathToDatasets):
-#     print(folders, subfolders, len(files))
-#
-# check how to build path
-# print(os.path.split(pathToDatasets))
-# print(os.path.split(pathToDatasets)[0])
-# print(os.path.split(pathToDatasets)[1])
+# get word, and return dictionary
+def createDctionary(words):
+    dictionary = dict( [ (word, True) for word in words] )
+    return dictionary
 
-# Print the ham and spam folders
-# for folders, subfolders, files in os.walk(pathToDatasets):
-#     if (os.path.split(folders)[1] == 'ham'):
-#         print(folders, subfolders, len(files))
-#
-#     if (os.path.split(folders)[1] == 'spam'):
-#         print(folders, subfolders, len(files))
+# #test function
+# print(create_word_features(['hello', 'my', 'names', 'is', 'alan']))
 
-ham_list = []
-spam_list = []
+ham_tab = []
+spam_tab = []
 
-# Read the files and join ham and spam list
+# Read files, and split words in string with word_tokenize() and create dictionary
+for folders, subfolders, files in os.walk(pathToDatasets):
+    if (os.path.split(folders)[1] == 'ham'):
+        for file in files:
+            with open(os.path.join(folders, file), encoding="latin-1") as nextFile:
+                data = nextFile.read()
+                # break string into words with nltk library
+                words=word_tokenize(data)
+                ham_tab.append((createDctionary(words),"ham"))
 
-for directories, subdirs, files in os.walk(pathToDatasets):
-    if (os.path.split(directories)[1] == 'ham'):
-        for filename in files:
-            with open(os.path.join(directories, filename), encoding="latin-1") as f:
-                data = f.read()
-                ham_list.append(data)
-
-    if (os.path.split(directories)[1] == 'spam'):
-        for filename in files:
+    if (os.path.split(folders)[1] == 'spam'):
+        for file in files:
             try:
-                with open(os.path.join(directories, filename), encoding="latin-1") as f:
-                    data = f.read()
-                    spam_list.append(data)
+                with open(os.path.join(folders, file), encoding="latin-1") as nextFile:
+                    data = nextFile.read()
+                    # break string into words with nltk library
+                    words=word_tokenize(data)
+                    spam_tab.append((createDctionary(words),"spam"))
             except:
-                print(filename)
+                print(file)
 
-print(ham_list[0])
-print(spam_list[0])
+print(ham_tab[1])
+print(spam_tab[1])
